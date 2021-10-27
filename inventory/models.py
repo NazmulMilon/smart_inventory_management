@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserProfile(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    user=models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True)
+    phone=models.CharField(max_length=11)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
-class Authentication(models.Model):
-    user=models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
-    phone=models.CharField(max_length=11)
-    password=models.IntegerField()
+# class Authentication(models.Model):
+#     user=models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+#     phone=models.CharField(max_length=11)
+    
 
