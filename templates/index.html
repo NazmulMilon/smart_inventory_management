@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
   <!-- summernote -->
   <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -49,6 +51,20 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
+      {% if  request.user.is_authenticated %}
+
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'logout' %}" class="btn btn-info btn-lg" style="font-size:12px ;">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
+      </li>
+      {% endif %}
+
+      {% if not  request.user.is_authenticated %}
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'register' %}"><i class="fa fa-user-plus"  style="font-size:32px;"></i></a>
+      </li>
+      {% endif %}
     </ul>
 
     <!-- Right navbar links -->
@@ -69,6 +85,8 @@
                 <button class="btn btn-navbar" type="button" data-widget="navbar-search">
                   <i class="fas fa-times"></i>
                 </button>
+
+                
               </div>
             </div>
           </form>

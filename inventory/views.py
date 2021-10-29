@@ -1,7 +1,9 @@
-from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.http.response import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import UserProfile
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 # Create your views here.
 
 def home(request):
@@ -25,4 +27,22 @@ def register(request):
 
             new_profile.save()
             return HttpResponse('Your Registration has successfully done.')
-    return render(request,'registration.html')    
+    return render(request,'registration.html')  
+
+
+def user_login(request):
+    if request.method=='POST':
+        user_name=request.POST['user_name']
+        password=request.POST['password']
+        user=authenticate(request, username=user_name, password=password)
+        if user is not None:
+            login(request, user)
+            #return HttpResponse('Your login has successfully done.')
+            return redirect('/')
+        else:
+            return HttpResponse('Wrong username or password')
+            #messages.error(request, 'User or password is incorrect')
+    return render(request, 'login.html')
+def user_logout(request):
+    logout(request)
+    return redirect('/')
